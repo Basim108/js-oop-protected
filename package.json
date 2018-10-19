@@ -1,0 +1,28 @@
+{
+  "name": "yes",
+  "version": "1.0.0",
+  "description": "samples and tests of using protected methods in JS",
+  "main": "es5-app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Basim108/js-oop-protected.git"
+  },
+  "keywords": [
+    "protected",
+    "js",
+    "es5",
+    "oop"
+  ],
+  "author": "Basim Al-Jawahery",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Basim108/js-oop-protected/issues"
+  },
+  "homepage": "https://github.com/Basim108/js-oop-protected#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}

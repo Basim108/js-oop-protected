@@ -1,6 +1,6 @@
-import ProtectedError from "./protectedError";
+const ProtectedError = require("./protected-error");
 
-module.exports = function BaseClass() {
+function BaseClass() {
     // Make sure that instance was created correctly
     if (!(this instanceof BaseClass))
         return new BaseClass();
@@ -18,7 +18,7 @@ module.exports = function BaseClass() {
     }
 
     // Define method that will be not writable, configurable and visible in for-in cycles.
-    Object.defineProperty(BaseClass.prototype, 'protectedMethod', {
+    Object.defineProperty(this, 'protectedMethod', {
         value: function(){
             checkAccess.call(this);
             protectedMethod();
@@ -36,7 +36,7 @@ module.exports = function BaseClass() {
     }
 
     var _protectedProperty;
-    Object.defineProperty(BaseClass.prototype, 'protectedProperty', {
+    Object.defineProperty(this, 'protectedProperty', {
         get: function () {
             checkAccess.call(this);
             return _protectedProperty;
@@ -49,8 +49,14 @@ module.exports = function BaseClass() {
         configurable: false
     });
 
-    this.publicMethod = function () {
+    this.useProtectedMethodInside = function () {
         protectedMethod(); // правильный способ вызова защищенного метода из других методов класса BaseClass
         //this.protectedMethod(); // Неправильный способ вызова, т.к. он приведет к выбросу исключения ProtectedError
     }
+
+    this.useProtectedPropertyInside = function () {
+        console.log(_protectedProperty); // правильный способ вызова защищенного ствойства из других методов класса BaseClass
+        //console.log(this.protectedProperty); // Неправильный способ вызова, т.к. он приведет к выбросу исключения ProtectedError
+    }
 }
+module.exports = BaseClass;
