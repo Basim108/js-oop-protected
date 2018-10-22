@@ -1,19 +1,19 @@
 const ProtectedError = require('./protected-error');
-const BaseClass = require('./es5-base');
+const DerivedClass = require('./es5-derived');
 
 /**
  * @class 
- * @extends BaseClass
+ * @extends DerivedClass
  */
-function DerivedClass() {
+function GrandDerivedClass() {
     // Make sure that instance was created correctly
-    if (!(this instanceof DerivedClass))
-        return new DerivedClass();
+    if (!(this instanceof GrandDerivedClass))
+        return new GrandDerivedClass();
     
     var _self = this;
     var _baseProtectedPropertyDescriptor = Object.getOwnPropertyDescriptor(_self, 'protectedProperty');
     var _base = {
-        /** Get protectedMethod from BaseClass and bind it into instance of DerivedClass. */
+        /** Get protectedMethod from DerivedClass and bind it into instance of GrandDerivedClass. */
         protectedMethod: _self.protectedMethod.bind(_self),
     };
 
@@ -28,23 +28,23 @@ function DerivedClass() {
 
     /** @summary Check context that is called from derived classes */
     function checkAccess() {
-        if (this.constructor === DerivedClass)
+        if (this.constructor === GrandDerivedClass)
             throw new ProtectedError();
     }
 
     Object.defineProperty(_self, 'protectedMethod', {
         // Hiding method from for-in cycles
         enumerable: false,
-        // Do checks and then call protectedMEthod from BaseClass
+        // Do checks and then call protectedMEthod from DerivedClass
         value: function () {
             checkAccess.call(_self); 
             return _base.protectedMethod();
         }
     });
 
-    /** @description It is vitally important to redifne the property in DerivedClass
+    /** @description It is vitally important to redifne the property in GrandDerivedClass
      * and check the access here. Because only here we can forbid access from 
-     * using protectedProperty as a public member of DerivedClass instance: e.g.
+     * using protectedProperty as a public member of GrandDerivedClass instance: e.g.
      * var obj = new DeriverClass();
      * obj.protectedProperty = 12; 
      * */
@@ -74,10 +74,10 @@ function DerivedClass() {
         console.log(_base.protectedProperty);
     }     
 }
-DerivedClass.prototype = new BaseClass();
-Object.defineProperty(DerivedClass.prototype, 'constructor', {
-    value: DerivedClass,
+GrandDerivedClass.prototype = new DerivedClass();
+Object.defineProperty(GrandDerivedClass.prototype, 'constructor', {
+    value: GrandDerivedClass,
     writable: false,
     configurable: false
 });
-module.exports = DerivedClass;
+module.exports = GrandDerivedClass;
