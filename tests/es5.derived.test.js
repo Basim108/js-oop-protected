@@ -1,5 +1,5 @@
-const ProtectedError = require('../protected-error');
-const DerivedClass = require('../es5-derived');
+const ProtectedError = require('../modules/protected-error');
+const DerivedClass = require('../modules/es5-derived');
 
 test('should not allow to access protectedMethod: protectedMethod as a public member of DerivedClass', () => {
     var obj = new DerivedClass();

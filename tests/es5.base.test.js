@@ -1,5 +1,5 @@
-const ProtectedError = require('../protected-error');
-const BaseClass = require('../es5-base');
+const ProtectedError = require('../modules/protected-error');
+const BaseClass = require('../modules/es5-base');
 
 test('should not allow to access protectedMethod', () => {
     var obj = new BaseClass();
