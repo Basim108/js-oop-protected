@@ -7,4 +7,5 @@ $ npm test
 ````
 
 An article with comprehensive description of code
+https://habr.com/post/425521/
 
